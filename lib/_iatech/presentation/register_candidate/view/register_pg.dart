@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software2/_iatech/infraestructure/register/register_repository.dart';
 import 'package:software2/_iatech/presentation/register_candidate/view_model/register_vm.dart';
 import 'package:software2/shared/colors/colors.dart';
+import 'package:software2/shared/widgets/custom_alert.dart';
 import 'package:software2/shared/widgets/custom_app_bar.dart';
 import 'package:software2/shared/widgets/custom_button.dart';
 import 'package:software2/shared/widgets/custom_text_field.dart';
@@ -21,59 +21,100 @@ class RegisterPage extends StatelessWidget {
         appBar: const CustomAppBar(title: 'Registrar Candidato', isBack: true),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Separator(size: 2),
-                CustomTextField(
-                    textEditingController: TextEditingController(),
-                    labelText: 'Nombre(s)'),
-                const Separator(size: 2),
-                CustomTextField(
-                    textEditingController: TextEditingController(),
-                    labelText: 'Apellido(s)'),
-                const Separator(size: 2),
-                CustomTextField(
-                  textEditingController: TextEditingController(),
-                  labelText: 'Cedula',
-                ),
-                const Separator(size: 2),
-                CustomTextField(
-                  textEditingController: registerViewModel.birthDateController,
-                  labelText: 'Fecha de nacimiento',
-                  onTap: () {
-                    _showDatePicker(
-                        context, registerViewModel.birthDateController);
-                  },
-                  onChanged: (value) {
-                    _selectedDate = DateTime.parse(value);
-                  },
-                ),
-                const Separator(size: 2),
-                CustomTextField(
-                  textEditingController: TextEditingController(),
-                  labelText: 'Correo Electronico',
-                ),
-                const Separator(size: 2),
-                CustomTextField(
-                  textEditingController: TextEditingController(),
-                  labelText: 'Telefono',
-                ),
-                const Separator(size: 2),
-                CustomTextField(textEditingController: TextEditingController()),
-                const Separator(size: 2),
-                CustomTextField(textEditingController: TextEditingController()),
-                const Separator(size: 2),
-                CustomTextField(textEditingController: TextEditingController()),
-                const Separator(size: 2),
-                CustomButton(
-                    width: Get.width,
-                    onPressed: () {
-                      RegisterRepository().getProductsBanner();
+          child: RawScrollbar(
+            thumbColor: ConstColors.principalBlue,
+            thumbVisibility: true,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const Separator(size: 2),
+                  CustomTextField(
+                      textEditingController: registerViewModel.nameController,
+                      labelText: 'Nombre(s)'),
+                  const Separator(size: 2),
+                  CustomTextField(
+                      textEditingController:
+                          registerViewModel.lastNameController,
+                      labelText: 'Apellido(s)'),
+                  const Separator(size: 2),
+                  CustomTextField(
+                    textEditingController: registerViewModel.idController,
+                    labelText: 'Cedula',
+                    keyboardType: TextInputType.number,
+                  ),
+                  const Separator(size: 2),
+                  CustomTextField(
+                    textEditingController:
+                        registerViewModel.birthDateController,
+                    labelText: 'Fecha de nacimiento',
+                    onTap: () {
+                      _showDatePicker(
+                          context, registerViewModel.birthDateController);
                     },
-                    text: 'Registrar',
-                    backgroundColor: ConstColors.principalBlue)
-              ],
+                    onChanged: (value) {
+                      _selectedDate = DateTime.parse(value);
+                    },
+                  ),
+                  const Separator(size: 2),
+                  CustomTextField(
+                    textEditingController: registerViewModel.emailController,
+                    labelText: 'Correo Electronico',
+                  ),
+                  const Separator(size: 2),
+                  CustomTextField(
+                    textEditingController: registerViewModel.phoneController,
+                    labelText: 'Telefono',
+                    keyboardType: TextInputType.number,
+                  ),
+                  const Separator(size: 2),
+                  CustomTextField(
+                    textEditingController: registerViewModel.addresController,
+                    labelText: 'Direccion',
+                  ),
+                  const Separator(size: 2),
+                  CustomTextField(
+                    textEditingController: registerViewModel.cityController,
+                    labelText: 'Ciudad',
+                  ),
+                  const Separator(size: 2),
+                  CustomTextField(
+                    textEditingController: registerViewModel.positionController,
+                    labelText: 'Cargo',
+                  ),
+                  const Separator(size: 2),
+                  CustomTextField(
+                    textEditingController: registerViewModel.salaryController,
+                    labelText: 'Aspiracion salarial',
+                    keyboardType: TextInputType.number,
+                  ),
+                  const Separator(size: 2),
+                  CustomTextField(
+                    textEditingController: registerViewModel.levelController,
+                    labelText: 'Nivel de estudio',
+                  ),
+                  const Separator(size: 2),
+                  CustomButton(
+                      width: Get.width,
+                      onPressed: () async {
+                        bool response =
+                            await registerViewModel.registerCandidate();
+
+                        if (response) {
+                          CustomAlert(
+                              title: 'Registro exitoso',
+                              body:
+                                  'El candidato se ha registrado correctamente',
+                              onPressed: () {
+                                Get.close(2);
+                              });
+                        }
+                      },
+                      text: 'Registrar',
+                      backgroundColor: ConstColors.principalBlue)
+                ],
+              ),
             ),
           ),
         ));

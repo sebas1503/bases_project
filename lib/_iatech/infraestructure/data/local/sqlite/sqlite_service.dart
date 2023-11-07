@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:archive/archive_io.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

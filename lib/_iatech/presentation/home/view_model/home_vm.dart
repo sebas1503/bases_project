@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
-import 'package:software2/_iatech/domain/models/options_model.dart';
+import 'package:software2/_iatech/domain/home/models/options_model.dart';
 import 'package:software2/_iatech/presentation/register_candidate/view/register_pg.dart';
+import 'package:software2/_iatech/presentation/request/view/request_pg.dart';
 import 'package:software2/shared/assets/assets.dart';
 import 'package:software2/shared/colors/colors.dart';
 
@@ -22,7 +23,7 @@ class HomeViewModel extends GetxController {
         Get.to(() => RegisterPage());
       }),
       OptionsModel('Gestionar Solicitudes', Res.images.getRequest, () {
-        Get.to(() => RegisterPage());
+        Get.to(() => RequestPage());
       }),
       OptionsModel('Programar Entrevistas', Res.images.programateDate, () {
         Get.snackbar('Modulo en Construccion', 'Pronto estara disponible',

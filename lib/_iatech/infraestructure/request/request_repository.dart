@@ -1,26 +1,28 @@
 import 'package:get/get.dart';
-import 'package:software2/_iatech/domain/register/interface/i_register.dart';
 import 'package:software2/_iatech/domain/register/model/aspirante_model.dart';
+import 'package:software2/_iatech/domain/request/interface/i_request.dart';
 import 'package:software2/_iatech/infraestructure/data/local/sqlite/base_sqlite_service.dart';
 import 'package:software2/_iatech/infraestructure/data/local/sqlite/sqlite_service.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/sqlite_api.dart';
 
-class RegisterRepository implements IRegister {
+class RequestRepository implements IRequest {
   @override
-  Future<bool> registerUser(Candidate candidate) async {
+  Future<List<Candidate>> getRequest() async {
     Database? db;
+    List<Candidate> response = [];
     try {
       BaseSqliteService sqliteService = SqliteService();
       db = await sqliteService.openDB('Database.db');
 
       if (db != null) {
-        return await db.insert('Aspirantes', candidate.toJson()) > 0;
+        var result = await db.query('Aspirantes');
+        response = result.map((e) => Candidate.fromJson(e)).toList();
       }
     } catch (e) {
       Get.printError(info: "Error al insertar aspirante ----> $e");
-      return false;
+      return [];
     }
 
-    return false;
+    return response;
   }
 }
