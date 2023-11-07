@@ -11,6 +11,15 @@ class ResImages {
 
   final loginBackground = 'res/images/login_background.jpg';
   final loading = 'res/images/loading.png';
+  final warning = 'res/images/advertencia.png';
+  final addPerson = 'res/images/add_person.png';
+  final getRequest = 'res/images/gestion_request.png';
+  final programateDate = 'res/images/programate_date.png';
+  final gestResult = 'res/images/gestionar_result.png';
+  final references = 'res/images/references.png';
+  final antecedentes = 'res/images/antecedentes.png';
+  final oferts = 'res/images/oferts.png';
+  final contrato = 'res/images/contrato.png';
 }
 
 class _ResIcons {

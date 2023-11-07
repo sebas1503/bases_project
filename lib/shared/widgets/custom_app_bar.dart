@@ -4,9 +4,11 @@ import 'package:software2/shared/colors/colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final bool isBack;
   const CustomAppBar({
     Key? key,
     required this.title,
+    required this.isBack,
   }) : super(key: key);
 
   @override
@@ -15,7 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: ConstColors.primaryColor,
+      backgroundColor: ConstColors.principalBlue,
       elevation: 0,
       automaticallyImplyLeading: false,
       title: Container(),
@@ -32,7 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 bottomRight: Radius.circular(25)),
             child: Container(
               width: double.infinity,
-              color: ConstColors.primaryColor,
+              color: ConstColors.principalBlue,
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, bottom: 20),
                 child: Text(
@@ -46,32 +48,33 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           )),
       actions: [
-        Container(
-            margin: const EdgeInsets.only(right: 10),
-            child: GestureDetector(
-              onTap: () => {Get.back()},
-              child: Row(
-                children: [
-                  Text('Cerrar',
-                      style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: ConstColors.white)),
-                  const SizedBox(width: 10),
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Container(
-                          width: 22,
-                          height: 22,
-                          color: ConstColors.white,
-                          child: Icon(
-                            Icons.close,
-                            color: ConstColors.primaryColor,
-                            size: 15,
-                          )))
-                ],
-              ),
-            ))
+        if (isBack)
+          Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                onTap: () => {Get.back()},
+                child: Row(
+                  children: [
+                    Text('Cerrar',
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: ConstColors.white)),
+                    const SizedBox(width: 10),
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Container(
+                            width: 22,
+                            height: 22,
+                            color: ConstColors.white,
+                            child: Icon(
+                              Icons.close,
+                              color: ConstColors.primaryColor,
+                              size: 15,
+                            )))
+                  ],
+                ),
+              ))
       ],
     );
   }

@@ -143,17 +143,17 @@ class BodyAlert extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          // style: textStyleTitle ??
-                          //     TextStyles.dynamicAileron(
-                          //         percentageFontsize: 3,
-                          //         isBold: true,
-                          //         color: Colores.primaryColor),
+                          style: textStyleTitle ??
+                              TextStyle(
+                                  color: ConstColors.primaryColor,
+                                  fontSize: Get.width * 0.06,
+                                  fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         const Separator(size: heightSepartor),
                         Expanded(
                           child: Image.asset(
-                            image ?? Res.images.loading,
+                            image ?? Res.images.warning,
                             fit: BoxFit.fitWidth,
                           ),
                         ),
@@ -161,11 +161,10 @@ class BodyAlert extends StatelessWidget {
                         if (body != null)
                           Text(
                             body!,
-                            // style: textStyleBody ??
-                            //     TextStyles.dynamicAileron(
-                            //         percentageFontsize: 1.5,
-                            //         isBold: true,
-                            //         color: Colores.mediumGray),
+                            style: textStyleBody ??
+                                TextStyle(
+                                    color: ConstColors.greyText,
+                                    fontSize: Get.width * 0.04),
                             textAlign: TextAlign.center,
                           ),
                         if (body != null) const Separator(size: heightSepartor),

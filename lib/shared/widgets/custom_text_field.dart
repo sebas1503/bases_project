@@ -12,17 +12,25 @@ class CustomTextField extends StatefulWidget {
       this.keyboardType,
       this.maxLines,
       this.height,
-      this.prefixIcon})
+      this.prefixIcon,
+      this.borderColor,
+      this.textColor,
+      this.icon,
+      this.onTap})
       : super(key: key);
 
   final TextEditingController textEditingController;
   final Function(String)? onChanged;
+  final Function()? onTap;
   final String? hintText;
   final String? labelText;
   final TextInputType? keyboardType;
   final int? maxLines;
   final double? height;
   final Icon? prefixIcon;
+  final Color? borderColor;
+  final Color? textColor;
+  final Icon? icon;
 
   @override
   CustomTextFieldState createState() => CustomTextFieldState();
@@ -31,10 +39,10 @@ class CustomTextField extends StatefulWidget {
 class CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
-    const border = OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+    final border = OutlineInputBorder(
+        borderRadius: const BorderRadius.all(Radius.circular(30.0)),
         borderSide: BorderSide(
-          color: Colors.redAccent,
+          color: widget.borderColor ?? ConstColors.greyText,
         ));
 
     return Column(
@@ -46,14 +54,19 @@ class CustomTextFieldState extends State<CustomTextField> {
             keyboardType: widget.keyboardType,
             controller: widget.textEditingController,
             onChanged: widget.onChanged,
-            style: TextStyle(color: ConstColors.black, fontSize: 18),
+            onTap: widget.onTap,
+            style: TextStyle(
+                color: widget.textColor ?? ConstColors.greyText, fontSize: 18),
             decoration: InputDecoration(
+                suffixIcon: widget.icon,
                 prefixIcon: widget.prefixIcon,
                 fillColor: ConstColors.white,
                 hintText: widget.hintText,
-                hintStyle: TextStyle(color: ConstColors.greyText),
+                hintStyle:
+                    TextStyle(color: widget.textColor ?? ConstColors.greyText),
                 labelText: widget.labelText,
-                labelStyle: TextStyle(color: ConstColors.greyText),
+                labelStyle:
+                    TextStyle(color: widget.textColor ?? ConstColors.greyText),
                 focusedBorder: border,
                 enabledBorder: border,
                 border: border),

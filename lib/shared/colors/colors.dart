@@ -11,4 +11,5 @@ class ConstColors {
   static HexColor greenText = HexColor("#9DC41A");
   static HexColor backgroundPage = HexColor('#E5E5E5');
   static HexColor green = HexColor('0xFF4CAF50');
+  static HexColor principalBlue = HexColor('#002E5E');
 }
