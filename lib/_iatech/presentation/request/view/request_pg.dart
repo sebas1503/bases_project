@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:software2/_iatech/domain/register/model/aspirante_model.dart';
 import 'package:software2/_iatech/presentation/request/view_model/request_vm.dart';
+import 'package:software2/_iatech/presentation/request/widgets/edit_user.dart';
 import 'package:software2/shared/colors/colors.dart';
+import 'package:software2/shared/widgets/custom_alert_widget.dart';
 import 'package:software2/shared/widgets/custom_app_bar.dart';
+import 'package:software2/shared/widgets/custom_button.dart';
 
 class RequestPage extends StatelessWidget {
   RequestPage({super.key});
@@ -18,6 +22,7 @@ class RequestPage extends StatelessWidget {
         child: Column(
           children: [
             Obx(() => RawScrollbar(
+                  scrollbarOrientation: ScrollbarOrientation.top,
                   interactive: true,
                   trackVisibility: true,
                   thumbVisibility: true,
@@ -47,6 +52,7 @@ class RequestPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       columns: const [
+                        DataColumn(label: Center(child: Text('Modificar'))),
                         DataColumn(label: Center(child: Text('Nombre'))),
                         DataColumn(label: Center(child: Text('Apellido'))),
                         DataColumn(label: Center(child: Text('Cedula'))),
@@ -66,6 +72,15 @@ class RequestPage extends StatelessWidget {
                           .map(
                             (entry) => DataRow(
                               cells: <DataCell>[
+                                DataCell(Center(
+                                    child: IconButton(
+                                        onPressed: () {
+                                          CustomAlertWidget(
+                                            title: 'Que deseas hacer hoy?',
+                                            body: _contentAlert(entry),
+                                          );
+                                        },
+                                        icon: const Icon(Icons.edit)))),
                                 DataCell(Center(child: Text(entry.nombre!))),
                                 DataCell(Center(child: Text(entry.apellido!))),
                                 DataCell(Center(child: Text(entry.cedula!))),
@@ -90,6 +105,34 @@ class RequestPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _contentAlert(Candidate candidate) {
+    return Column(
+      children: [
+        CustomButton(
+          onPressed: () {
+            requestViewModel.setCandidate(candidate);
+            Get.close(1);
+            Get.to(() => EditUser());
+          },
+          text: 'Editar',
+          width: Get.width * 0.5,
+          backgroundColor: ConstColors.principalBlue,
+          rightIcon: Icon(Icons.edit, color: ConstColors.white),
+        ),
+        CustomButton(
+          onPressed: () async {
+            await requestViewModel.deletedRequest(id: candidate.cedula!);
+          },
+          text: 'Eliminar',
+          width: Get.width * 0.5,
+          backgroundColor: ConstColors.principalBlue,
+          rightIcon:
+              Icon(Icons.delete_forever_outlined, color: ConstColors.white),
+        )
+      ],
     );
   }
 }

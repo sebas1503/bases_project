@@ -32,7 +32,7 @@ class CustomButton extends StatelessWidget {
   final EdgeInsets? padding;
   final AssetImage? leftIcon;
   final Icon? leftIconData;
-  final AssetImage? rightIcon;
+  final Widget? rightIcon;
   final double? iconSize;
   final TextStyle? textStyle;
 
@@ -80,10 +80,9 @@ class CustomButton extends StatelessWidget {
                 ),
                 if (leftIcon != null || rightIcon != null) const Spacer(),
                 if (rightIcon != null)
-                  ImageIcon(
-                    rightIcon,
-                    color: colorContent,
-                    size: iconSize,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 25),
+                    child: rightIcon ?? Container(),
                   ),
               ],
             ),

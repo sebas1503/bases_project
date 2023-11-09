@@ -5,10 +5,12 @@ import 'package:software2/shared/colors/colors.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool isBack;
+  final void Function()? onPressed;
   const CustomAppBar({
     Key? key,
     required this.title,
     required this.isBack,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -52,7 +54,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           Container(
               margin: const EdgeInsets.only(right: 10),
               child: GestureDetector(
-                onTap: () => {Get.back()},
+                onTap: onPressed ?? () => Get.back(),
                 child: Row(
                   children: [
                     Text('Cerrar',

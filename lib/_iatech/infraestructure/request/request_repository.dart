@@ -25,4 +25,48 @@ class RequestRepository implements IRequest {
 
     return response;
   }
+
+  @override
+  Future<bool> deeltedRequest({required String id}) async {
+    Database? db;
+    try {
+      BaseSqliteService sqliteService = SqliteService();
+      db = await sqliteService.openDB('Database.db');
+
+      if (db != null) {
+        return await db
+                .delete('Aspirantes', where: 'Cedula = ?', whereArgs: [id]) >
+            0;
+      }
+    } catch (e) {
+      Get.printError(info: "Error al elimiar aspirante ----> $e");
+      return false;
+    }
+
+    return false;
+  }
+
+  @override
+  Future<bool> updateRequest({required Candidate candidate}) async {
+    Database? db;
+    try {
+      BaseSqliteService sqliteService = SqliteService();
+      db = await sqliteService.openDB('Database.db');
+
+      if (db != null) {
+        return await db.update(
+              'Aspirantes',
+              candidate.toJson(),
+              where: 'Cedula = ?',
+              whereArgs: [candidate.cedula],
+            ) >
+            0;
+      }
+    } catch (e) {
+      Get.printError(info: "Error al actualizar aspirante ----> $e");
+      return false;
+    }
+
+    return false;
+  }
 }
