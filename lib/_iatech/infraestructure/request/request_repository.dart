@@ -7,7 +7,7 @@ import 'package:sqflite/sqlite_api.dart';
 
 class RequestRepository implements IRequest {
   @override
-  Future<List<Candidate>> getRequest() async {
+  Future<List<Candidate>> getRequest(String search) async {
     Database? db;
     List<Candidate> response = [];
     try {
@@ -15,7 +15,9 @@ class RequestRepository implements IRequest {
       db = await sqliteService.openDB('Database.db');
 
       if (db != null) {
-        var result = await db.query('Aspirantes');
+        var result = await db.query('Aspirantes',
+            where: 'Cedula LIKE ? or Nombre LIKE ? ',
+            whereArgs: ['%$search%', '%$search%']);
         response = result.map((e) => Candidate.fromJson(e)).toList();
       }
     } catch (e) {

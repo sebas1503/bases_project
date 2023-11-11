@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:software2/_iatech/domain/register/model/aspirante_model.dart';
 import 'package:software2/_iatech/presentation/request/view_model/request_vm.dart';
 import 'package:software2/_iatech/presentation/request/widgets/edit_user.dart';
@@ -7,10 +8,15 @@ import 'package:software2/shared/colors/colors.dart';
 import 'package:software2/shared/widgets/custom_alert_widget.dart';
 import 'package:software2/shared/widgets/custom_app_bar.dart';
 import 'package:software2/shared/widgets/custom_button.dart';
+import 'package:software2/shared/widgets/custom_text_field.dart';
+import 'package:software2/shared/widgets/separator.dart';
 
 class RequestPage extends StatelessWidget {
   RequestPage({super.key});
   final requestViewModel = RequestViewModel.findOrInitialize;
+
+  final Debouncer onSearchDebouncer =
+      Debouncer(delay: const Duration(milliseconds: 500));
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +27,17 @@ class RequestPage extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            const Separator(size: 2),
+            CustomTextField(
+              textEditingController: requestViewModel.searchController,
+              labelText: 'Buscar',
+              height: Get.height * 0.08,
+              onChanged: (_) {
+                onSearchDebouncer(
+                    () async => await requestViewModel.getRequest());
+              },
+            ),
+            const Separator(size: 2),
             Obx(() => RawScrollbar(
                   scrollbarOrientation: ScrollbarOrientation.top,
                   interactive: true,

@@ -20,10 +20,13 @@ class RequestViewModel extends GetxController {
   TextEditingController salaryController = TextEditingController();
   TextEditingController levelController = TextEditingController();
   //
+  TextEditingController searchController = TextEditingController();
+  //
   RxList<Candidate> requestList = <Candidate>[].obs;
 
   Future<void> getRequest() async {
-    requestList.value = await requestService.getRequest();
+    requestList.value = await requestService
+        .getRequest(searchController.text.isEmpty ? '' : searchController.text);
   }
 
   Future<void> deletedRequest({required String id}) async {
@@ -65,14 +68,6 @@ class RequestViewModel extends GetxController {
     return await requestService.updateRequest(candidate: candidate);
   }
 
-  //
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
-  ///
   ///
   ///
   static RequestViewModel get findOrInitialize {

@@ -6,8 +6,8 @@ class RequestService {
 
   RequestService(this.iRequest);
 
-  Future<List<Candidate>> getRequest() async {
-    return await iRequest.getRequest();
+  Future<List<Candidate>> getRequest(String search) async {
+    return await iRequest.getRequest(search);
   }
 
   Future<bool> deeltedRequest({required String id}) async {
