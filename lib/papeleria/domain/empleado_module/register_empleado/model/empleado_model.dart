@@ -22,7 +22,7 @@ class Empleado {
       nombreDos: json['nombreDos'],
       apellidoUno: json['apellidoUno'],
       apellidoDos: json['apellidoDos'],
-      direccion: json['direccion'],
+      //direccion: json['direccion'],
       idUsuario: json['idUsuario']);
 
   Map<String, dynamic> toJson() {
@@ -32,7 +32,7 @@ class Empleado {
       'nombreDos': nombreDos,
       'apellidoUno': apellidoUno,
       'apellidoDos': apellidoDos,
-      'direccion': direccion,
+      // 'direccion': direccion,
       'idUsuario': idUsuario
     };
   }

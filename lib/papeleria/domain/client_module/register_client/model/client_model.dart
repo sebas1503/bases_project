@@ -17,22 +17,20 @@ class Client {
       this.idUsuario});
 
   factory Client.fromJson(Map<String, dynamic> json) => Client(
-      idClient: json['idClient'],
+      idClient: json['idCliente'],
       nombreUno: json['nombreUno'],
       nombreDos: json['nombreDos'],
       apellidoUno: json['apellidoUno'],
       apellidoDos: json['apellidoDos'],
-      direccion: json['direccion'],
       idUsuario: json['idUsuario']);
 
   Map<String, dynamic> toJson() {
     return {
-      'idClient': idClient,
+      'idCliente': idClient,
       'nombreUno': nombreUno,
       'nombreDos': nombreDos,
       'apellidoUno': apellidoUno,
       'apellidoDos': apellidoDos,
-      'direccion': direccion,
       'idUsuario': idUsuario
     };
   }

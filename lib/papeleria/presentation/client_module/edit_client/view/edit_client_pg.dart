@@ -42,74 +42,79 @@ class EditClientPage extends StatelessWidget {
               },
             ),
             const Separator(size: 4),
-            Obx(() => SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                    child: DataTable(
-                      headingRowColor: MaterialStateColor.resolveWith(
-                        (states) => ConstColors.principalColor,
+            Obx(() => editClientViewModel.requestList.isNotEmpty
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(20),
                       ),
-                      showCheckboxColumn: true,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                      ),
-                      border: TableBorder(
-                        horizontalInside: const BorderSide(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 1.0,
+                      child: DataTable(
+                        headingRowColor: MaterialStateColor.resolveWith(
+                          (states) => ConstColors.principalColor,
                         ),
-                        verticalInside: const BorderSide(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 1.0,
+                        showCheckboxColumn: true,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
                         ),
-                        borderRadius: BorderRadius.circular(10),
+                        border: TableBorder(
+                          horizontalInside: const BorderSide(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 1.0,
+                          ),
+                          verticalInside: const BorderSide(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        columns: const [
+                          DataColumn(label: Center(child: Text('Modificar'))),
+                          DataColumn(label: Center(child: Text('Cedula'))),
+                          DataColumn(
+                              label: Center(child: Text('Primer Nombre'))),
+                          DataColumn(
+                              label: Center(child: Text('Segundo Nombre'))),
+                          DataColumn(
+                              label: Center(child: Text('Primer Apellido'))),
+                          DataColumn(
+                              label: Center(child: Text('Segundo Apellido'))),
+                        ],
+                        rows: editClientViewModel.requestList
+                            .map(
+                              (entry) => DataRow(
+                                cells: <DataCell>[
+                                  DataCell(Center(
+                                      child: IconButton(
+                                          onPressed: () {
+                                            CustomAlertWidget(
+                                              title: 'Elige una opcion',
+                                              body: _contentAlert(entry),
+                                            );
+                                          },
+                                          icon: const Icon(Icons.edit)))),
+                                  DataCell(Center(
+                                      child: Text(entry.idClient!.toString()))),
+                                  DataCell(
+                                      Center(child: Text(entry.nombreUno!))),
+                                  DataCell(
+                                      Center(child: Text(entry.nombreDos!))),
+                                  DataCell(
+                                      Center(child: Text(entry.apellidoUno!))),
+                                  DataCell(
+                                      Center(child: Text(entry.apellidoDos!))),
+                                ],
+                              ),
+                            )
+                            .toList(),
                       ),
-                      columns: const [
-                        DataColumn(label: Center(child: Text('Modificar'))),
-                        DataColumn(label: Center(child: Text('Cedula'))),
-                        DataColumn(label: Center(child: Text('Primer Nombre'))),
-                        DataColumn(
-                            label: Center(child: Text('Segundo Nombre'))),
-                        DataColumn(
-                            label: Center(child: Text('Primer Apellido'))),
-                        DataColumn(
-                            label: Center(child: Text('Segundo Apellido'))),
-                      ],
-                      rows: editClientViewModel.requestList
-                          .map(
-                            (entry) => DataRow(
-                              cells: <DataCell>[
-                                DataCell(Center(
-                                    child: IconButton(
-                                        onPressed: () {
-                                          CustomAlertWidget(
-                                            title: 'Elige una opcion',
-                                            body: _contentAlert(entry),
-                                          );
-                                        },
-                                        icon: const Icon(Icons.edit)))),
-                                DataCell(Center(
-                                    child: Text(entry.idClient!.toString()))),
-                                DataCell(Center(child: Text(entry.nombreUno!))),
-                                DataCell(Center(child: Text(entry.nombreDos!))),
-                                DataCell(
-                                    Center(child: Text(entry.apellidoUno!))),
-                                DataCell(
-                                    Center(child: Text(entry.apellidoDos!))),
-                              ],
-                            ),
-                          )
-                          .toList(),
                     ),
-                  ),
-                ))
+                  )
+                : Container())
           ],
         ),
       ),
