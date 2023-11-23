@@ -139,7 +139,7 @@ class BodyAlert extends StatelessWidget {
                           title,
                           style: textStyleTitle ??
                               TextStyle(
-                                  color: ConstColors.primaryColor,
+                                  color: ConstColors.black,
                                   fontSize: Get.width * 0.06,
                                   fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,

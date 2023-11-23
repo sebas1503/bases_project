@@ -84,6 +84,17 @@ class _Data {
 
   //   return buffer.toString();
   // }
+  int getInt(String number) {
+    try {
+      if (number.isEmpty) {
+        return 0;
+      }
+      return int.parse(number.split(".")[0]);
+    } catch (e) {
+      //  Get.printError(info: "$e");
+      return 0;
+    }
+  }
 }
 
 class _Device {

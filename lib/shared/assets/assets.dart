@@ -9,7 +9,7 @@ class ResImages {
   ResImages._();
   final splash = 'res/images/splash.png';
 
-  final loginBackground = 'res/images/login_background.jpg';
+  final loginBackground = 'res/images/background_login.jpg';
   final loading = 'res/images/loading.png';
   final warning = 'res/images/advertencia.png';
   final addPerson = 'res/images/add_person.png';

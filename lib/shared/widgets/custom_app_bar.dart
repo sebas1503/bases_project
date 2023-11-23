@@ -19,7 +19,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: ConstColors.principalBlue,
+      backgroundColor: ConstColors.principalColor,
       elevation: 0,
       automaticallyImplyLeading: false,
       title: Container(),
@@ -36,7 +36,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 bottomRight: Radius.circular(25)),
             child: Container(
               width: double.infinity,
-              color: ConstColors.principalBlue,
+              color: ConstColors.principalColor,
               child: Padding(
                 padding: const EdgeInsets.only(left: 20, bottom: 20),
                 child: Text(
@@ -72,7 +72,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                             child: Icon(
                               Icons.close,
                               color: ConstColors.primaryColor,
-                              size: 15,
+                              size: 14,
                             )))
                   ],
                 ),

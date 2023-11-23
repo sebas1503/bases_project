@@ -145,8 +145,8 @@ class BodyAlert extends StatelessWidget {
                           title,
                           style: textStyleTitle ??
                               TextStyle(
-                                  color: ConstColors.primaryColor,
-                                  fontSize: Get.width * 0.06,
+                                  color: Colors.black,
+                                  fontSize: Get.width * 0.07,
                                   fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
@@ -164,7 +164,7 @@ class BodyAlert extends StatelessWidget {
                             style: textStyleBody ??
                                 TextStyle(
                                     color: ConstColors.greyText,
-                                    fontSize: Get.width * 0.04),
+                                    fontSize: Get.width * 0.05),
                             textAlign: TextAlign.center,
                           ),
                         if (body != null) const Separator(size: heightSepartor),

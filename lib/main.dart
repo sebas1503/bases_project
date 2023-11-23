@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software2/_iatech/presentation/login/view/login_pg.dart';
+import 'package:software2/papeleria/presentation/login/view/login_pg.dart';
 import 'package:get_storage/get_storage.dart';
 import 'shared/util/preferences.dart';
 
@@ -23,10 +23,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'IA Tech',
+      title: 'Papeleria',
       initialRoute: '/',
       debugShowCheckedModeBanner: false,
-    
       getPages: [GetPage(name: '/', page: () => LoginPage())],
     );
   }
