@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:software2/papeleria/presentation/empleado_module/edit_empleado/view_model/edit_empleado_vm.dart';
+import 'package:software2/papeleria/presentation/proveedor_module/edit_proveedor/view_model/edit_proveedor_vm.dart';
 import 'package:software2/shared/colors/colors.dart';
 import 'package:software2/shared/widgets/custom_alert.dart';
 import 'package:software2/shared/widgets/custom_app_bar.dart';
@@ -10,16 +10,16 @@ import 'package:software2/shared/widgets/separator.dart';
 
 DateTime _selectedDate = DateTime.now();
 
-class EditEmpleado extends StatelessWidget {
-  EditEmpleado({super.key});
+class EditProveedor extends StatelessWidget {
+  EditProveedor({super.key});
 
-  final editEmpleadoViewModel = EditEmpleadoViewModel.findOrInitialize;
+  final editProveedorViewModel = EditProveedorViewModel.findOrInitialize;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const CustomAppBar(
-          title: 'Editar Empleado',
+          title: 'Editar Proveedor',
           isBack: true,
         ),
         body: Padding(
@@ -34,32 +34,40 @@ class EditEmpleado extends StatelessWidget {
                 children: [
                   const Separator(size: 2),
                   CustomTextField(
-                      textEditingController: editEmpleadoViewModel.idController,
+                      textEditingController:
+                          editProveedorViewModel.idController,
                       labelText: 'Cédula'),
                   const Separator(size: 2),
                   CustomTextField(
                       textEditingController:
-                          editEmpleadoViewModel.nameOneController,
+                          editProveedorViewModel.nameOneController,
                       labelText: 'Primer Nombre '),
                   const Separator(size: 2),
                   CustomTextField(
                     textEditingController:
-                        editEmpleadoViewModel.nameTwoController,
+                        editProveedorViewModel.nameTwoController,
                     labelText: 'Segundo Nombre',
                     keyboardType: TextInputType.number,
                   ),
                   const Separator(size: 2),
                   CustomTextField(
                     textEditingController:
-                        editEmpleadoViewModel.lastNameOneController,
+                        editProveedorViewModel.lastNameOneController,
                     labelText: 'Primer Apellido',
                     keyboardType: TextInputType.number,
                   ),
                   const Separator(size: 2),
                   CustomTextField(
                     textEditingController:
-                        editEmpleadoViewModel.lastNameTwoController,
+                        editProveedorViewModel.lastNameTwoController,
                     labelText: 'Segundo Apellido',
+                    keyboardType: TextInputType.number,
+                  ),
+                  const Separator(size: 2),
+                  CustomTextField(
+                    textEditingController:
+                        editProveedorViewModel.businessController,
+                    labelText: 'Nro. Empresa',
                     keyboardType: TextInputType.number,
                   ),
                   const Separator(size: 2),
@@ -67,12 +75,12 @@ class EditEmpleado extends StatelessWidget {
                       width: Get.width,
                       onPressed: () async {
                         bool response =
-                            await editEmpleadoViewModel.updateEmpleado();
+                            await editProveedorViewModel.updateProveedor();
                         if (response) {
-                          await editEmpleadoViewModel.getEmpleados();
+                          await editProveedorViewModel.getProveedor();
                           CustomAlert(
                             title: 'Exito',
-                            body: 'Empleado actualizado correctamente',
+                            body: 'Proveedor actualizado correctamente',
                             onPressed: () => Get.close(2),
                           );
                         }

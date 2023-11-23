@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
+import 'package:software2/papeleria/domain/product_module/register_product/model/product_model.dart';
+import 'package:software2/papeleria/presentation/product_module/edit_product/widgets/edit_product_wg.dart';
 import 'package:software2/shared/colors/colors.dart';
 import 'package:software2/shared/widgets/custom_alert_widget.dart';
 import 'package:software2/shared/widgets/custom_app_bar.dart';
 import 'package:software2/shared/widgets/custom_button.dart';
 import 'package:software2/shared/widgets/custom_text_field.dart';
 import 'package:software2/shared/widgets/separator.dart';
-
 import '../../../../../shared/widgets/custom_alert.dart';
+import '../view_model/edit_product_vm.dart';
 
-import '../../../../domain/empleado_module/register_empleado/model/empleado_model.dart';
-import '../view_model/edit_empleado_vm.dart';
-import '../widgets/edit_empleado.dart';
-
-class EditEmpleadoPage extends StatelessWidget {
-  EditEmpleadoPage({super.key});
-  final editEmpleadosViewModel = EditEmpleadoViewModel.findOrInitialize;
+class EditProductPage extends StatelessWidget {
+  EditProductPage({super.key});
+  final editProductsViewModel = EditProductViewModel.findOrInitialize;
 
   final Debouncer onSearchDebouncer =
       Debouncer(delay: const Duration(milliseconds: 500));
 
   @override
   Widget build(BuildContext context) {
-    editEmpleadosViewModel.getEmpleados();
+    editProductsViewModel.getProducts();
     return Scaffold(
-      appBar: const CustomAppBar(title: ' Gestionar Empleado', isBack: true),
+      appBar: const CustomAppBar(title: ' Gestionar Productos', isBack: true),
       body: Padding(
         padding:
             const EdgeInsets.only(left: 15, top: 8.0, bottom: 8, right: 15),
@@ -33,12 +31,12 @@ class EditEmpleadoPage extends StatelessWidget {
           children: [
             const Separator(size: 2),
             CustomTextField(
-              textEditingController: editEmpleadosViewModel.searchController,
+              textEditingController: editProductsViewModel.searchController,
               labelText: 'Buscar',
               height: Get.height * 0.08,
               onChanged: (_) {
                 onSearchDebouncer(
-                    () async => await editEmpleadosViewModel.getEmpleados());
+                    () async => await editProductsViewModel.getProducts());
               },
             ),
             const Separator(size: 4),
@@ -73,16 +71,14 @@ class EditEmpleadoPage extends StatelessWidget {
                       ),
                       columns: const [
                         DataColumn(label: Center(child: Text('Modificar'))),
-                        DataColumn(label: Center(child: Text('Cedula'))),
-                        DataColumn(label: Center(child: Text('Primer Nombre'))),
+                        DataColumn(label: Center(child: Text('Código'))),
+                        DataColumn(label: Center(child: Text('Nombre'))),
+                        DataColumn(label: Center(child: Text('Descripción'))),
+                        DataColumn(label: Center(child: Text('Precio'))),
                         DataColumn(
-                            label: Center(child: Text('Segundo Nombre'))),
-                        DataColumn(
-                            label: Center(child: Text('Primer Apellido'))),
-                        DataColumn(
-                            label: Center(child: Text('Segundo Apellido'))),
+                            label: Center(child: Text('Cod. Categoria'))),
                       ],
-                      rows: editEmpleadosViewModel.requestList
+                      rows: editProductsViewModel.requestList
                           .map(
                             (entry) => DataRow(
                               cells: <DataCell>[
@@ -96,13 +92,14 @@ class EditEmpleadoPage extends StatelessWidget {
                                         },
                                         icon: const Icon(Icons.edit)))),
                                 DataCell(Center(
-                                    child: Text(entry.idEmpleado!.toString()))),
-                                DataCell(Center(child: Text(entry.nombreUno!))),
-                                DataCell(Center(child: Text(entry.nombreDos!))),
+                                    child: Text(entry.idProduct!.toString()))),
+                                DataCell(Center(child: Text(entry.nombre!))),
                                 DataCell(
-                                    Center(child: Text(entry.apellidoUno!))),
-                                DataCell(
-                                    Center(child: Text(entry.apellidoDos!))),
+                                    Center(child: Text(entry.descripcion!))),
+                                DataCell(Center(
+                                    child: Text(entry.precio!.toString()))),
+                                DataCell(Center(
+                                    child: Text(entry.categoria!.toString()))),
                               ],
                             ),
                           )
@@ -116,14 +113,14 @@ class EditEmpleadoPage extends StatelessWidget {
     );
   }
 
-  Widget _contentAlert(Empleado empleado) {
+  Widget _contentAlert(Product product) {
     return Column(
       children: [
         CustomButton(
           onPressed: () {
-            editEmpleadosViewModel.setEmpleado(empleado);
+            editProductsViewModel.setProduct(product);
             Get.close(1);
-            Get.to(() => EditEmpleado());
+            Get.to(() => EditProductWg());
           },
           text: 'Editar',
           width: Get.width * 0.5,
@@ -134,13 +131,13 @@ class EditEmpleadoPage extends StatelessWidget {
         CustomButton(
           onPressed: () async {
             Get.close(1);
-            var response = await editEmpleadosViewModel.deleteEmpleado(
-                id: empleado.idEmpleado!.toString());
+            var response = await editProductsViewModel.deleteProduct(
+                id: product.idProduct!.toString());
             if (response) {
-              await editEmpleadosViewModel.getEmpleados();
+              await editProductsViewModel.getProducts();
               CustomAlert(
                 title: 'Exito',
-                body: 'Empleado eliminado correctamente',
+                body: 'Producto eliminado correctamente',
                 onPressed: () => Get.close(1),
               );
             }

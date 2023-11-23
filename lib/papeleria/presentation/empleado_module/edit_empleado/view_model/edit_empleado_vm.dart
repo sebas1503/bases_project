@@ -37,7 +37,7 @@ class EditEmpleadoViewModel extends GetxController {
     }
   }
 
-  setClient(Empleado empleado) {
+  setEmpleado(Empleado empleado) {
     idController.text = empleado.idEmpleado!.toString();
     nameOneController.text = empleado.nombreUno!;
     nameTwoController.text = empleado.nombreDos!;
@@ -46,7 +46,7 @@ class EditEmpleadoViewModel extends GetxController {
     //addressController.text = client.direccion!;
   }
 
-  Future<bool> updateClient() async {
+  Future<bool> updateEmpleado() async {
     Empleado empleado = Empleado();
     empleado.idEmpleado = Util.data.getInt(idController.text);
     empleado.nombreUno = nameOneController.text;

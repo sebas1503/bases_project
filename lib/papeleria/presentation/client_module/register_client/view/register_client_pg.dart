@@ -78,8 +78,7 @@ class RegisterClientPage extends StatelessWidget {
                         if (response) {
                           CustomAlert(
                               title: 'Registro exitoso',
-                              body:
-                                  'El candidato se ha registrado correctamente',
+                              body: 'El cliente se ha registrado correctamente',
                               onPressed: () {
                                 Get.close(2);
                               });

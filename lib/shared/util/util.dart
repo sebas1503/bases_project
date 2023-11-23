@@ -95,6 +95,24 @@ class _Data {
       return 0;
     }
   }
+
+  String getCurrentDate() {
+    var now = DateTime.now();
+    String formatter = DateFormat('yyyy-MM-dd').format(now);
+    return formatter;
+  }
+
+  String getCurrentDateWhitFormat(String format) {
+    var now = DateTime.now();
+    String formatter = DateFormat(format).format(now);
+    return formatter;
+  }
+
+  String getCurrentDateTime() {
+    var now = DateTime.now();
+    String formatter = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+    return formatter;
+  }
 }
 
 class _Device {

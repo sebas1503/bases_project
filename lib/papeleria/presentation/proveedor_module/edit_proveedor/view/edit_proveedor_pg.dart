@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
+import 'package:software2/papeleria/domain/proveedor_module/register_proveedor/model/proveedor_model.dart';
+import 'package:software2/papeleria/presentation/proveedor_module/edit_proveedor/view_model/edit_proveedor_vm.dart';
+import 'package:software2/papeleria/presentation/proveedor_module/edit_proveedor/widgets/edit_proveedor.dart';
 import 'package:software2/shared/colors/colors.dart';
 import 'package:software2/shared/widgets/custom_alert_widget.dart';
 import 'package:software2/shared/widgets/custom_app_bar.dart';
@@ -10,22 +13,18 @@ import 'package:software2/shared/widgets/separator.dart';
 
 import '../../../../../shared/widgets/custom_alert.dart';
 
-import '../../../../domain/empleado_module/register_empleado/model/empleado_model.dart';
-import '../view_model/edit_empleado_vm.dart';
-import '../widgets/edit_empleado.dart';
-
-class EditEmpleadoPage extends StatelessWidget {
-  EditEmpleadoPage({super.key});
-  final editEmpleadosViewModel = EditEmpleadoViewModel.findOrInitialize;
+class EditProveedorPage extends StatelessWidget {
+  EditProveedorPage({super.key});
+  final editEmpleadosViewModel = EditProveedorViewModel.findOrInitialize;
 
   final Debouncer onSearchDebouncer =
       Debouncer(delay: const Duration(milliseconds: 500));
 
   @override
   Widget build(BuildContext context) {
-    editEmpleadosViewModel.getEmpleados();
+    editEmpleadosViewModel.getProveedor();
     return Scaffold(
-      appBar: const CustomAppBar(title: ' Gestionar Empleado', isBack: true),
+      appBar: const CustomAppBar(title: ' Gestionar Proveedor', isBack: true),
       body: Padding(
         padding:
             const EdgeInsets.only(left: 15, top: 8.0, bottom: 8, right: 15),
@@ -38,7 +37,7 @@ class EditEmpleadoPage extends StatelessWidget {
               height: Get.height * 0.08,
               onChanged: (_) {
                 onSearchDebouncer(
-                    () async => await editEmpleadosViewModel.getEmpleados());
+                    () async => await editEmpleadosViewModel.getProveedor());
               },
             ),
             const Separator(size: 4),
@@ -96,7 +95,7 @@ class EditEmpleadoPage extends StatelessWidget {
                                         },
                                         icon: const Icon(Icons.edit)))),
                                 DataCell(Center(
-                                    child: Text(entry.idEmpleado!.toString()))),
+                                    child: Text(entry.idEmpresa!.toString()))),
                                 DataCell(Center(child: Text(entry.nombreUno!))),
                                 DataCell(Center(child: Text(entry.nombreDos!))),
                                 DataCell(
@@ -116,14 +115,14 @@ class EditEmpleadoPage extends StatelessWidget {
     );
   }
 
-  Widget _contentAlert(Empleado empleado) {
+  Widget _contentAlert(Proveedor proveedor) {
     return Column(
       children: [
         CustomButton(
           onPressed: () {
-            editEmpleadosViewModel.setEmpleado(empleado);
+            editEmpleadosViewModel.setProveedor(proveedor);
             Get.close(1);
-            Get.to(() => EditEmpleado());
+            Get.to(() => EditProveedor());
           },
           text: 'Editar',
           width: Get.width * 0.5,
@@ -134,13 +133,13 @@ class EditEmpleadoPage extends StatelessWidget {
         CustomButton(
           onPressed: () async {
             Get.close(1);
-            var response = await editEmpleadosViewModel.deleteEmpleado(
-                id: empleado.idEmpleado!.toString());
+            var response = await editEmpleadosViewModel.deleteProveedor(
+                id: proveedor.idProveedor!.toString());
             if (response) {
-              await editEmpleadosViewModel.getEmpleados();
+              await editEmpleadosViewModel.getProveedor();
               CustomAlert(
                 title: 'Exito',
-                body: 'Empleado eliminado correctamente',
+                body: 'Proveedor eliminado correctamente',
                 onPressed: () => Get.close(1),
               );
             }

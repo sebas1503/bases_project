@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:software2/papeleria/presentation/proveedor_module/register_proveedor/view_model/register_proveedor_vm.dart';
 import 'package:software2/shared/colors/colors.dart';
 import 'package:software2/shared/widgets/custom_alert.dart';
 import 'package:software2/shared/widgets/custom_app_bar.dart';
@@ -7,19 +8,17 @@ import 'package:software2/shared/widgets/custom_button.dart';
 import 'package:software2/shared/widgets/custom_text_field.dart';
 import 'package:software2/shared/widgets/separator.dart';
 
-import '../view_model/register_empleado_vm.dart';
-
 DateTime _selectedDate = DateTime.now();
 
-class RegisterEmpleadoPage extends StatelessWidget {
-  RegisterEmpleadoPage({super.key});
+class RegisterProveedorPage extends StatelessWidget {
+  RegisterProveedorPage({super.key});
 
-  final registerViewModel = RegisterEmpleadoViewModel.findOrInitialize;
+  final registerViewModel = RegisterProveedorViewModel.findOrInitialize;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(title: 'Registrar Empleado', isBack: true),
+        appBar: const CustomAppBar(title: 'Registrar Probeedor', isBack: true),
         body: Padding(
           padding: const EdgeInsets.all(12.0),
           child: SingleChildScrollView(
@@ -52,11 +51,11 @@ class RegisterEmpleadoPage extends StatelessWidget {
                   labelText: 'Segundo Apellido *',
                 ),
                 const Separator(size: 2),
-                // CustomTextField(
-                //   textEditingController: registerViewModel.addressController,
-                //   labelText: 'Direccion',
-                // ),
-                const Separator(size: 4),
+                CustomTextField(
+                  textEditingController: registerViewModel.businessController,
+                  labelText: 'Cod. Empresa',
+                ),
+                const Separator(size: 6),
                 CustomButton(
                     width: Get.width,
                     onPressed: () async {
@@ -65,7 +64,8 @@ class RegisterEmpleadoPage extends StatelessWidget {
                           registerViewModel
                               .lastNameOneController.text.isEmpty ||
                           registerViewModel
-                              .lastNameTwoController.text.isEmpty) {
+                              .lastNameTwoController.text.isEmpty ||
+                          registerViewModel.businessController.text.isEmpty) {
                         CustomAlert(
                             title: 'Campos vacios',
                             body: 'Por favor llene los campos obligatorios',
@@ -75,12 +75,12 @@ class RegisterEmpleadoPage extends StatelessWidget {
                         return;
                       } else {
                         bool response =
-                            await registerViewModel.registerEmpleado();
+                            await registerViewModel.registerProveedor();
                         if (response) {
                           CustomAlert(
                               title: 'Registro exitoso',
                               body:
-                                  'El empleado se ha registrado correctamente',
+                                  'El Proveedor se ha registrado correctamente',
                               onPressed: () {
                                 Get.close(2);
                               });

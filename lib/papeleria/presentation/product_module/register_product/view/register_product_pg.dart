@@ -7,14 +7,14 @@ import 'package:software2/shared/widgets/custom_button.dart';
 import 'package:software2/shared/widgets/custom_text_field.dart';
 import 'package:software2/shared/widgets/separator.dart';
 
-import '../view_model/register_empleado_vm.dart';
+import '../view_model/register_product_vm.dart';
 
 DateTime _selectedDate = DateTime.now();
 
-class RegisterEmpleadoPage extends StatelessWidget {
-  RegisterEmpleadoPage({super.key});
+class RegisterProductPage extends StatelessWidget {
+  RegisterProductPage({super.key});
 
-  final registerViewModel = RegisterEmpleadoViewModel.findOrInitialize;
+  final registerProductViewModel = RegisterProductViewModel.findOrInitialize;
 
   @override
   Widget build(BuildContext context) {
@@ -27,29 +27,32 @@ class RegisterEmpleadoPage extends StatelessWidget {
               children: [
                 const Separator(size: 2),
                 CustomTextField(
-                  textEditingController: registerViewModel.idController,
-                  labelText: 'Cedula *',
+                  textEditingController:
+                      registerProductViewModel.idProductController,
+                  labelText: 'Cod. Producto *',
                   keyboardType: TextInputType.number,
                 ),
                 const Separator(size: 2),
                 CustomTextField(
-                    textEditingController: registerViewModel.nameOneController,
-                    labelText: 'Primer Nombre *'),
+                    textEditingController:
+                        registerProductViewModel.nameController,
+                    labelText: 'Nombre *'),
                 const Separator(size: 2),
                 CustomTextField(
-                    textEditingController: registerViewModel.nameTwoController,
-                    labelText: 'Segundo Nombre'),
+                    textEditingController:
+                        registerProductViewModel.descriptionController,
+                    labelText: 'Descripcion *'),
                 const Separator(size: 2),
                 CustomTextField(
                   textEditingController:
-                      registerViewModel.lastNameOneController,
-                  labelText: 'Primer Apellido *',
+                      registerProductViewModel.priceController,
+                  labelText: 'Precio *',
                 ),
                 const Separator(size: 2),
                 CustomTextField(
                   textEditingController:
-                      registerViewModel.lastNameTwoController,
-                  labelText: 'Segundo Apellido *',
+                      registerProductViewModel.categoryController,
+                  labelText: 'Cod. Categoria *',
                 ),
                 const Separator(size: 2),
                 // CustomTextField(
@@ -60,12 +63,16 @@ class RegisterEmpleadoPage extends StatelessWidget {
                 CustomButton(
                     width: Get.width,
                     onPressed: () async {
-                      if (registerViewModel.idController.text.isEmpty ||
-                          registerViewModel.nameOneController.text.isEmpty ||
-                          registerViewModel
-                              .lastNameOneController.text.isEmpty ||
-                          registerViewModel
-                              .lastNameTwoController.text.isEmpty) {
+                      if (registerProductViewModel
+                              .idProductController.text.isEmpty ||
+                          registerProductViewModel
+                              .nameController.text.isEmpty ||
+                          registerProductViewModel
+                              .descriptionController.text.isEmpty ||
+                          registerProductViewModel
+                              .priceController.text.isEmpty ||
+                          registerProductViewModel
+                              .categoryController.text.isEmpty) {
                         CustomAlert(
                             title: 'Campos vacios',
                             body: 'Por favor llene los campos obligatorios',
@@ -75,12 +82,12 @@ class RegisterEmpleadoPage extends StatelessWidget {
                         return;
                       } else {
                         bool response =
-                            await registerViewModel.registerEmpleado();
+                            await registerProductViewModel.registerEmpleado();
                         if (response) {
                           CustomAlert(
                               title: 'Registro exitoso',
                               body:
-                                  'El empleado se ha registrado correctamente',
+                                  'El producto se ha registrado correctamente',
                               onPressed: () {
                                 Get.close(2);
                               });
