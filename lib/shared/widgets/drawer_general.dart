@@ -5,12 +5,15 @@ import 'package:software2/papeleria/presentation/empleado_module/edit_empleado/v
 import 'package:software2/papeleria/presentation/empleado_module/register_empleado/view/register_empleado_pg.dart';
 import 'package:software2/papeleria/presentation/product_module/edit_product/view/edit_product_pg.dart';
 import 'package:software2/papeleria/presentation/product_module/register_product/view/register_product_pg.dart';
-import 'package:software2/papeleria/presentation/proveedor_module/edit_proveedor/view/edit_proveedor_pg.dart';
-import 'package:software2/papeleria/presentation/proveedor_module/register_proveedor/view/register_proveedor_pg.dart';
 import 'package:software2/papeleria/presentation/report1_products_by_category/view/products_by_category_report1_pg.dart';
 import 'package:software2/papeleria/presentation/report1_products_by_sells_diaries/view/products_by_sells_diaries_report1_pg.dart';
+import 'package:software2/papeleria/presentation/report2_months_comparative/view/comparative_months_report2_pg.dart';
 
 import '../../papeleria/presentation/client_module/edit_client/view/edit_client_pg.dart';
+import '../../papeleria/presentation/proveedor_module/edit_proveedor/view/edit_proveedor_pg.dart';
+import '../../papeleria/presentation/proveedor_module/register_proveedor/view/register_proveedor_pg.dart';
+import '../../papeleria/presentation/report1_products_in_inventory/view/products_in_inventory_report1_pg.dart';
+import '../../papeleria/presentation/report2_products_by_client/view/sells_by_client_report2_pg.dart';
 import '../assets/assets.dart';
 import '../colors/colors.dart';
 
@@ -76,6 +79,52 @@ class _DrawerGeneralState extends State<DrawerGeneral> {
                     ),
                     onTap: () {
                       Get.to(() => EditClientPage());
+                    },
+                    leading: const Icon(
+                      Icons.check_box_outlined,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            title: ExpansionTile(
+              //collapsedIconColor: ConstColors.principalColor,
+              leading: const Icon(Icons.home_work),
+              title: const Text(
+                'Proveedor',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal),
+                textAlign: TextAlign.start,
+              ),
+              children: [
+                const Divider(),
+                Visibility(
+                  visible: true,
+                  child: ListTile(
+                    title: const Text(
+                      'Registrar Proveedor',
+                      textAlign: TextAlign.start,
+                    ),
+                    onTap: () {
+                      Get.to(() => RegisterProveedorPage());
+                    },
+                    leading: const Icon(Icons.person_add_sharp),
+                  ),
+                ),
+                Visibility(
+                  visible: true,
+                  child: ListTile(
+                    title: const Text(
+                      'Ver Proveedor',
+                      textAlign: TextAlign.start,
+                    ),
+                    onTap: () {
+                      Get.to(() => EditProveedorPage());
                     },
                     leading: const Icon(
                       Icons.check_box_outlined,
@@ -183,7 +232,7 @@ class _DrawerGeneralState extends State<DrawerGeneral> {
               //collapsedIconColor: ConstColors.principalColor,
               leading: const Icon(Icons.home_work),
               title: const Text(
-                'Reportes 1',
+                'Reportes Simples',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
@@ -226,7 +275,50 @@ class _DrawerGeneralState extends State<DrawerGeneral> {
                       textAlign: TextAlign.start,
                     ),
                     onTap: () {
-                      Get.to(() => ProductsBySellsDiariesReport1Page());
+                      Get.to(() => ProductsInInventoryReport1Page());
+                    },
+                    leading: const Icon(Icons.person_add_sharp),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            title: ExpansionTile(
+              //collapsedIconColor: ConstColors.principalColor,
+              leading: const Icon(Icons.home_work),
+              title: const Text(
+                'Reportes Intermedios',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.normal),
+                textAlign: TextAlign.start,
+              ),
+              children: [
+                const Divider(),
+                Visibility(
+                  visible: true,
+                  child: ListTile(
+                    title: const Text(
+                      'Ventas por cliente',
+                      textAlign: TextAlign.start,
+                    ),
+                    onTap: () {
+                      Get.to(() => SellsByClientReport2Page());
+                    },
+                    leading: const Icon(Icons.person_add_sharp),
+                  ),
+                ),
+                Visibility(
+                  visible: true,
+                  child: ListTile(
+                    title: const Text(
+                      'Comparativa meses',
+                      textAlign: TextAlign.start,
+                    ),
+                    onTap: () {
+                      Get.to(() => ComparativeMonthsReport2Page());
                     },
                     leading: const Icon(Icons.person_add_sharp),
                   ),

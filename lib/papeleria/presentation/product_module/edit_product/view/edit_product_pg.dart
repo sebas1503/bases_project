@@ -26,88 +26,92 @@ class EditProductPage extends StatelessWidget {
       appBar: const CustomAppBar(title: ' Gestionar Productos', isBack: true),
       body: Padding(
         padding:
-            const EdgeInsets.only(left: 15, top: 8.0, bottom: 8, right: 15),
-        child: Column(
-          children: [
-            const Separator(size: 2),
-            CustomTextField(
-              textEditingController: editProductsViewModel.searchController,
-              labelText: 'Buscar',
-              height: Get.height * 0.08,
-              onChanged: (_) {
-                onSearchDebouncer(
-                    () async => await editProductsViewModel.getProducts());
-              },
-            ),
-            const Separator(size: 4),
-            Obx(() => SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                    child: DataTable(
-                      headingRowColor: MaterialStateColor.resolveWith(
-                        (states) => ConstColors.principalColor,
+            const EdgeInsets.only(left: 15, top: 8.0, bottom: 30, right: 15),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const Separator(size: 2),
+              CustomTextField(
+                textEditingController: editProductsViewModel.searchController,
+                labelText: 'Buscar',
+                height: Get.height * 0.08,
+                onChanged: (_) {
+                  onSearchDebouncer(
+                      () async => await editProductsViewModel.getProducts());
+                },
+              ),
+              const Separator(size: 4),
+              Obx(() => SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(20),
                       ),
-                      showCheckboxColumn: true,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                      ),
-                      border: TableBorder(
-                        horizontalInside: const BorderSide(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 1.0,
+                      child: DataTable(
+                        headingRowColor: MaterialStateColor.resolveWith(
+                          (states) => ConstColors.principalColor,
                         ),
-                        verticalInside: const BorderSide(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 1.0,
+                        showCheckboxColumn: true,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
                         ),
-                        borderRadius: BorderRadius.circular(10),
+                        border: TableBorder(
+                          horizontalInside: const BorderSide(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 1.0,
+                          ),
+                          verticalInside: const BorderSide(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        columns: const [
+                          DataColumn(label: Center(child: Text('Modificar'))),
+                          DataColumn(label: Center(child: Text('Código'))),
+                          DataColumn(label: Center(child: Text('Nombre'))),
+                          DataColumn(label: Center(child: Text('Descripción'))),
+                          DataColumn(label: Center(child: Text('Precio'))),
+                          DataColumn(
+                              label: Center(child: Text('Cod. Categoria'))),
+                        ],
+                        rows: editProductsViewModel.requestList
+                            .map(
+                              (entry) => DataRow(
+                                cells: <DataCell>[
+                                  DataCell(Center(
+                                      child: IconButton(
+                                          onPressed: () {
+                                            CustomAlertWidget(
+                                              title: 'Elige una opcion',
+                                              body: _contentAlert(entry),
+                                            );
+                                          },
+                                          icon: const Icon(Icons.edit)))),
+                                  DataCell(Center(
+                                      child:
+                                          Text(entry.idProduct!.toString()))),
+                                  DataCell(Center(child: Text(entry.nombre!))),
+                                  DataCell(
+                                      Center(child: Text(entry.descripcion!))),
+                                  DataCell(Center(
+                                      child: Text(entry.precio!.toString()))),
+                                  DataCell(Center(
+                                      child:
+                                          Text(entry.categoria!.toString()))),
+                                ],
+                              ),
+                            )
+                            .toList(),
                       ),
-                      columns: const [
-                        DataColumn(label: Center(child: Text('Modificar'))),
-                        DataColumn(label: Center(child: Text('Código'))),
-                        DataColumn(label: Center(child: Text('Nombre'))),
-                        DataColumn(label: Center(child: Text('Descripción'))),
-                        DataColumn(label: Center(child: Text('Precio'))),
-                        DataColumn(
-                            label: Center(child: Text('Cod. Categoria'))),
-                      ],
-                      rows: editProductsViewModel.requestList
-                          .map(
-                            (entry) => DataRow(
-                              cells: <DataCell>[
-                                DataCell(Center(
-                                    child: IconButton(
-                                        onPressed: () {
-                                          CustomAlertWidget(
-                                            title: 'Elige una opcion',
-                                            body: _contentAlert(entry),
-                                          );
-                                        },
-                                        icon: const Icon(Icons.edit)))),
-                                DataCell(Center(
-                                    child: Text(entry.idProduct!.toString()))),
-                                DataCell(Center(child: Text(entry.nombre!))),
-                                DataCell(
-                                    Center(child: Text(entry.descripcion!))),
-                                DataCell(Center(
-                                    child: Text(entry.precio!.toString()))),
-                                DataCell(Center(
-                                    child: Text(entry.categoria!.toString()))),
-                              ],
-                            ),
-                          )
-                          .toList(),
                     ),
-                  ),
-                ))
-          ],
+                  ))
+            ],
+          ),
         ),
       ),
     );

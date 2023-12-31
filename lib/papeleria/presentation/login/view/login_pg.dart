@@ -59,8 +59,8 @@ class LoginPage extends StatelessWidget {
               ),
               const Separator(size: 5),
               CustomButton(
-                  onPressed: () {
-                    if (loginViewModel.login()) {
+                  onPressed: () async {
+                    if (await loginViewModel.login()) {
                       Get.offAll(() => HomePage());
                     } else {
                       CustomAlert(

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
-import 'package:software2/papeleria/presentation/report1_products_by_sells_diaries/view_model/products_by_sells_diaries_report1_vm.dart';
 import 'package:software2/shared/colors/colors.dart';
 import 'package:software2/shared/widgets/custom_app_bar.dart';
 import 'package:software2/shared/widgets/separator.dart';
 
-class ProductsBySellsDiariesReport1Page extends StatelessWidget {
-  ProductsBySellsDiariesReport1Page({super.key});
+import '../view_model/sells_by_client_report2_vm.dart';
 
-  final viewModel = ProductsBySellsDiariesReportViewModel.findOrInitialize;
+class SellsByClientReport2Page extends StatelessWidget {
+  SellsByClientReport2Page({super.key});
+
+  final viewModel = SellsByClientReport2ViewModel.findOrInitialize;
 
   final Debouncer onSearchDebouncer =
       Debouncer(delay: const Duration(milliseconds: 500));
@@ -17,24 +18,38 @@ class ProductsBySellsDiariesReport1Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-          title: 'Productos por ventas diarias', isBack: true),
+      appBar: const CustomAppBar(title: 'Ventas por cliente', isBack: true),
       body: Padding(
           padding:
               const EdgeInsets.only(left: 15, top: 8.0, bottom: 8, right: 15),
           child: Column(children: [
             const Separator(size: 2),
-            Obx(() => Align(
-                alignment: Alignment.topCenter,
-                child: Text(viewModel.date.value))),
+            Obx(() {
+              return DropdownButton<String>(
+                hint: const Text("Selecciona un cliente"),
+                value: viewModel.selectedClient.value.isEmpty
+                    ? null
+                    : viewModel.selectedClient.value,
+                onChanged: (newValue) {
+                  viewModel.selectedClient.value = newValue!;
+                  viewModel.getData();
+                },
+                items: viewModel.clients.map((nombreUno) {
+                  return DropdownMenuItem<String>(
+                    value: nombreUno,
+                    child: Text(nombreUno),
+                  );
+                }).toList(),
+              );
+            }),
             const Separator(size: 2),
             Obx(() => viewModel.listProducts.isNotEmpty
-                ? tableProductsBySellsDiaries()
+                ? tableProductsSellsByClient()
                 : const Padding(
                     padding: EdgeInsets.only(top: 80.0, left: 10, right: 10),
                     child: Center(
                         child: Text(
-                      'No hay productos registrados en el dia de hoy',
+                      'No hay ventas con este cliente',
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 18),
                     )),
@@ -44,7 +59,7 @@ class ProductsBySellsDiariesReport1Page extends StatelessWidget {
     );
   }
 
-  Widget tableProductsBySellsDiaries() {
+  Widget tableProductsSellsByClient() {
     return Obx(() => SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: ClipRRect(
@@ -75,9 +90,9 @@ class ProductsBySellsDiariesReport1Page extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
               columns: const [
-                DataColumn(label: Center(child: Text('Fecha Venta'))),
+                DataColumn(label: Center(child: Text('Cod. Cliente'))),
                 DataColumn(label: Center(child: Text('Cliente'))),
-                DataColumn(label: Center(child: Text('Empleado'))),
+                DataColumn(label: Center(child: Text('Fecha Compra'))),
                 DataColumn(label: Center(child: Text('Producto'))),
                 DataColumn(label: Center(child: Text('Cantidad'))),
                 DataColumn(label: Center(child: Text('Precio Unitario'))),
@@ -86,14 +101,13 @@ class ProductsBySellsDiariesReport1Page extends StatelessWidget {
                   .map(
                     (entry) => DataRow(
                       cells: <DataCell>[
-                        DataCell(Center(child: Text(entry.fechaVenta!))),
+                        DataCell(
+                            Center(child: Text(entry.idCliente!.toString()))),
                         DataCell(Center(
                             child: Text(
                                 '${entry.nombreCliente!} ${entry.apellidoCliente!}'))),
-                        DataCell(Center(
-                            child: Text(
-                                '${entry.nombreEmpleado!}${entry.apellidoEmpleado!}'))),
-                        DataCell(Center(child: Text(entry.nombreProducto!))),
+                        DataCell(Center(child: Text(entry.fechaCompra!))),
+                        DataCell(Center(child: Text(entry.producto!))),
                         DataCell(
                             Center(child: Text(entry.cantidad!.toString()))),
                         DataCell(Center(
